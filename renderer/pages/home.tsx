@@ -1,35 +1,24 @@
-import React from 'react'
-import Head from 'next/head'
-import Link from 'next/link'
-import Image from 'next/image'
+import Link from "next/link";
 
-export default function HomePage() {
+export default function Home() {
   return (
-    <React.Fragment>
-      <Head>
-        <title>Home - Nextron (with-tailwindcss)</title>
-      </Head>
-      <div className="grid grid-col-1 text-2xl w-full text-center">
-        <div>
-          <Image
-            className="ml-auto mr-auto"
-            src="/images/logo.png"
-            alt="Logo image"
-            width={256}
-            height={256}
-          />
-        </div>
-        <span>⚡ Electron ⚡</span>
-        <span>+</span>
-        <span>Next.js</span>
-        <span>+</span>
-        <span>tailwindcss</span>
-        <span>=</span>
-        <span>💕 </span>
+    <div className="flex flex-col items-center justify-center text-center min-h-screen px-4">
+      <div className="mb-16 max-w-md">
+        <h2 className="text-2xl md:text-3xl font-medium text-gray-700 mb-8">
+          Deep Work was coined by Dr. Cal Newport and means focused, undistracted work.
+        </h2>
+        <p className="text-xl md:text-2xl text-gray-700">
+          2-4 hour bursts of Deep Work per day is associated with 51% greater productivity.
+        </p>
       </div>
-      <div className="mt-1 w-full flex-wrap flex justify-center">
-        <Link href="/next">Go to next page</Link>
-      </div>
-    </React.Fragment>
-  )
+
+      <Link
+        href="/onboarding"
+        className="bg-blue-500 text-white font-medium px-8 py-3 rounded-full hover:bg-blue-600 transition-colors"
+      >
+        Get Started
+      </Link>
+
+    </div>
+  );
 }

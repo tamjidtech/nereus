@@ -6,13 +6,16 @@ module.exports = {
     './renderer/components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    colors: {
-      // use colors only specified
-      white: colors.white,
-      gray: colors.gray,
-      blue: colors.blue,
+    extend: {
+      colors: {
+        white: colors.white,
+        gray: colors.gray,
+        blue: colors.blue,
+        border: "hsl(var(--border))", // Add missing border color
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+      },
     },
-    extend: {},
   },
   plugins: [],
 }
