@@ -78,7 +78,7 @@ export default function SignUpPage() {
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 pb-6">
             <label htmlFor="confirmPassword" className="block text-gray-700">
               Confirm password
             </label>
@@ -102,12 +102,17 @@ export default function SignUpPage() {
             </div>
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white font-medium py-3 rounded-md hover:bg-blue-600 transition-colors"
-          >
-            Sign up
-          </button>
+          <Link href="../dashbord">
+
+
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white font-medium py-3 rounded-md hover:bg-blue-600 transition-colors"
+            >
+              Sign up
+            </button>
+
+          </Link>
         </form>
 
         <div className="mt-6 text-center text-gray-600">

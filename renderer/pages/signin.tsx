@@ -75,12 +75,17 @@ export default function SignInPage() {
             </div>
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white font-medium py-3 rounded-md hover:bg-blue-600 transition-colors"
-          >
-            Sign in
-          </button>
+          <Link href="../dashbord">
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white font-medium py-3 rounded-md hover:bg-blue-600 transition-colors"
+            >
+              Sign in
+            </button>
+
+          </Link>
+
+
         </form>
 
         <div className="mt-6 text-center text-gray-600">
