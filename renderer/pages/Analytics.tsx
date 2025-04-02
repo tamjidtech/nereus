@@ -120,7 +120,6 @@ export default function AnalyticsPage() {
                   <div className="text-[#7dd3fc] mr-2">
                     <Image src="/water.png" alt="Water" width={60} height={40} />
                   </div>
-                  <span className="text-2xl md:text-3xl font-semibold">32</span>
                 </div>
                 <p className="mt-2 text-sm">
                   Bottles

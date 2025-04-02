@@ -1,15 +1,16 @@
 
 
-import { ChevronDown, CreditCard, LayoutGrid, LineChart, Play, Plus, Settings } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { useState } from "react"
+import { ChevronDown, CreditCard, LayoutGrid, LineChart, Play, Plus, Settings } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { SocialDropdown } from "../pages/social-dropdown";
 
-type DistractionKey = "social" | "textEmail" | "tvVideo" | "shopping" | "sports" | "news"
+type DistractionKey = "social" | "textEmail" | "tvVideo" | "shopping" | "sports" | "news";
 
 export default function Dashboard() {
-    const [sessionGoal, setSessionGoal] = useState("")
-    const [showCategoryDropdown, setShowCategoryDropdown] = useState(true)
+    const [sessionGoal, setSessionGoal] = useState("");
+    const [showCategoryDropdown, setShowCategoryDropdown] = useState(true);
     const [distractions, setDistractions] = useState({
         social: true,
         textEmail: false,
@@ -17,72 +18,67 @@ export default function Dashboard() {
         shopping: false,
         sports: false,
         news: true,
-    })
-    const [tabLock, setTabLock] = useState(false)
-    const [customCategories, setCustomCategories] = useState<string[]>([])
+    });
+    const [tabLock, setTabLock] = useState(false);
+    const [customCategories, setCustomCategories] = useState<string[]>([]);
 
-    const [availableCategories, setAvailableCategories] = useState(["Dating", "Adult", "Games", "Gambling", "Politics"])
+    const [availableCategories, setAvailableCategories] = useState(["Dating", "Adult", "Games", "Gambling", "Politics"]);
 
-    // State to keep track of selected categories
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-    // Add state for timer values
-    const [workTime, setWorkTime] = useState("25 : 00")
-    const [restTime, setRestTime] = useState("5 : 00")
+    const [workTime, setWorkTime] = useState("25 : 00");
+    const [restTime, setRestTime] = useState("5 : 00");
 
-    // Function to toggle the custom category
+    const [isSocialDropdownOpen, setIsSocialDropdownOpen] = useState(false);
+
     const toggleCategory = (category: string) => {
         setSelectedCategories((prevSelectedCategories) => {
             if (prevSelectedCategories.includes(category)) {
-                // If category is already selected, remove it
-                return prevSelectedCategories.filter((item) => item !== category)
+                return prevSelectedCategories.filter((item) => item !== category);
             } else {
-                // If category is not selected, add it
-                return [...prevSelectedCategories, category]
+                return [...prevSelectedCategories, category];
             }
-        })
-    }
+        });
+    };
 
     const toggleDistraction = (key: DistractionKey) => {
         setDistractions({
             ...distractions,
             [key]: !distractions[key],
-        })
-    }
+        });
+    };
 
     const addCategory = (category: string) => {
         if (!customCategories.includes(category)) {
-            setCustomCategories([...customCategories, category])
-            setAvailableCategories(availableCategories.filter((item) => item !== category))
+            setCustomCategories([...customCategories, category]);
+            setAvailableCategories(availableCategories.filter((item) => item !== category));
         }
-        setShowCategoryDropdown(false)
-    }
+        setShowCategoryDropdown(false);
+    };
 
     const removeCategory = (category: string) => {
-        setCustomCategories(customCategories.filter((cat) => cat !== category))
-        setAvailableCategories([...availableCategories, category])
-    }
+        setCustomCategories(customCategories.filter((cat) => cat !== category));
+        setAvailableCategories([...availableCategories, category]);
+    };
 
-    // Function to handle clicking on General session
     const handleGeneralSession = () => {
-        setWorkTime("25 : 00")
-        setRestTime("5 : 00")
-        setSessionGoal("General")
-    }
+        setWorkTime("25 : 00");
+        setRestTime("5 : 00");
+        setSessionGoal("General");
+    };
 
-    // Function to handle clicking on Econ session
     const handleEconSession = () => {
-        setWorkTime("35 : 00")
-        setRestTime("15 : 00")
-        setSessionGoal("Econ")
-    }
+        setWorkTime("35 : 00");
+        setRestTime("15 : 00");
+        setSessionGoal("Econ");
+    };
 
     return (
         <div className="flex min-h-screen bg-white">
             {/* Left Sidebar */}
             <div className="w-[200px] border-r border-gray-200 p-6 flex flex-col">
                 <div className="space-y-6 flex-1">
-                    <Link href="../dashbord" className="pb-2">
+                    <Link href="../home" className="pb-2">
                         <Image src="/logo.png" alt="Nereus Deep Work" width={200} height={70} />
                     </Link>
                     <Link href="/dashbord" className="flex items-center text-blue-900 font-medium">
@@ -128,8 +124,10 @@ export default function Dashboard() {
 
                         <div className="grid grid-cols-2 gap-4">
                             {/* Static Distractions */}
+
                             {["Social", "Shopping", "Text/Email", "Sports", "TV/Video", "News"].map((item) => {
-                                const key = item.toLowerCase().replace("/", "") as keyof typeof distractions
+                                const key = item.toLowerCase().replace("/", "") as keyof typeof distractions;
+
                                 return (
                                     <div key={item} className="flex items-center justify-center">
                                         <input
@@ -139,25 +137,38 @@ export default function Dashboard() {
                                             className="w-5 h-5 text-[#38B6FF] border-gray-400 rounded-sm focus:ring-2 focus:ring-[#38B6FF] cursor-pointer"
                                         />
                                         <span className="ml-2">{item}</span>
-                                        <div className="h-4 w-4 text-gray-400 ml-2">
-                                            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M3.51614 12.137C3.13997 12.137 2.78847 12.0075 2.53564 11.767C2.21497 11.4648 2.0608 11.0085 2.1163 10.5151L2.34447 8.51712C2.38764 8.14096 2.6158 7.64146 2.88097 7.37012L7.9438 2.01129C9.20797 0.673123 10.5276 0.636123 11.8658 1.90029C13.204 3.16446 13.241 4.48412 11.9768 5.82229L6.91397 11.1811C6.65497 11.4586 6.17397 11.7176 5.7978 11.7793L3.81214 12.1185C3.7073 12.1246 3.6148 12.137 3.51614 12.137ZM9.9233 1.89412C9.44847 1.89412 9.03531 2.19012 8.61597 2.63412L3.55314 7.99912C3.4298 8.12862 3.28797 8.43696 3.2633 8.61579L3.03514 10.6138C3.01047 10.8173 3.0598 10.9838 3.1708 11.0886C3.2818 11.1935 3.4483 11.2305 3.6518 11.1996L5.63747 10.8605C5.8163 10.8296 6.1123 10.6693 6.23564 10.5398L11.2985 5.18096C12.0631 4.36696 12.3406 3.61462 11.2245 2.56629C10.7311 2.09146 10.3056 1.89412 9.9233 1.89412Z"
-                                                    fill="#7E92A2"
-                                                />
-                                                <path
-                                                    d="M10.7928 6.85212C10.7805 6.85212 10.762 6.85212 10.7496 6.85212C8.82564 6.66096 7.2778 5.19946 6.9818 3.28779C6.9448 3.03496 7.11747 2.80062 7.3703 2.75746C7.62314 2.72046 7.85747 2.89312 7.90064 3.14596C8.13497 4.63829 9.34364 5.78529 10.8483 5.93329C11.1011 5.95796 11.2861 6.18612 11.2615 6.43896C11.2306 6.67329 11.0271 6.85212 10.7928 6.85212Z"
-                                                    fill="#7E92A2"
-                                                />
-                                                <path
-                                                    d="M13.0498 14.1288H1.9498C1.69697 14.1288 1.4873 13.9191 1.4873 13.6663C1.4873 13.4135 1.69697 13.2038 1.9498 13.2038H13.0498C13.3026 13.2038 13.5123 13.4135 13.5123 13.6663C13.5123 13.9191 13.3026 14.1288 13.0498 14.1288Z"
-                                                    fill="#7E92A2"
-                                                />
-                                            </svg>
-                                        </div>
+
+                                        {item === "Social" && (
+                                            <div className="relative">
+                                                <button onClick={() => setIsSocialDropdownOpen((prev) => !prev)} className="ml-2 focus:outline-none">
+                                                    <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M2.51614 12.137C2.13997 12.137 1.78847 12.0075 1.53564 11.767C1.21497 11.4648 1.0608 11.0085 1.1163 10.5151L1.34447 8.51712C1.38764 8.14096 1.6158 7.64146 1.88097 7.37012L6.9438 2.01129C8.20797 0.673123 9.52764 0.636123 10.8658 1.90029C12.204 3.16446 12.241 4.48412 10.9768 5.82229L5.91397 11.1811C5.65497 11.4586 5.17397 11.7176 4.7978 11.7793L2.81214 12.1185C2.7073 12.1246 2.6148 12.137 2.51614 12.137ZM8.9233 1.89412C8.44847 1.89412 8.03531 2.19012 7.61597 2.63412L2.55314 7.99912C2.4298 8.12862 2.28797 8.43696 2.2633 8.61579L2.03514 10.6138C2.01047 10.8173 2.0598 10.9838 2.1708 11.0886C2.2818 11.1935 2.4483 11.2305 2.6518 11.1996L4.63747 10.8605C4.8163 10.8296 5.1123 10.6693 5.23564 10.5398L10.2985 5.18096C11.0631 4.36696 11.3406 3.61462 10.2245 2.56629C9.73114 2.09146 9.30564 1.89412 8.9233 1.89412Z" fill="#7E92A2" />
+                                                        <path d="M9.7928 6.85212C9.78047 6.85212 9.76197 6.85212 9.74964 6.85212C7.82564 6.66096 6.2778 5.19946 5.9818 3.28779C5.9448 3.03496 6.11747 2.80062 6.3703 2.75746C6.62314 2.72046 6.85747 2.89312 6.90064 3.14596C7.13497 4.63829 8.34364 5.78529 9.8483 5.93329C10.1011 5.95796 10.2861 6.18612 10.2615 6.43896C10.2306 6.67329 10.0271 6.85212 9.7928 6.85212Z" fill="#7E92A2" />
+                                                        <path d="M12.0498 14.1288H0.949805C0.696971 14.1288 0.487305 13.9191 0.487305 13.6663C0.487305 13.4135 0.696971 13.2038 0.949805 13.2038H12.0498C12.3026 13.2038 12.5123 13.4135 12.5123 13.6663C12.5123 13.9191 12.3026 14.1288 12.0498 14.1288Z" fill="#7E92A2" />
+                                                    </svg>
+
+                                                </button>
+
+                                                {isSocialDropdownOpen && <SocialDropdown isOpen={isSocialDropdownOpen} onClose={() => setIsSocialDropdownOpen(false)} />}
+                                            </div>
+                                        )}
+                                        {item !== "Social" && (
+                                            <div className="ml-2 cursor-pointer">
+                                                <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M2.51614 12.137C2.13997 12.137 1.78847 12.0075 1.53564 11.767C1.21497 11.4648 1.0608 11.0085 1.1163 10.5151L1.34447 8.51712C1.38764 8.14096 1.6158 7.64146 1.88097 7.37012L6.9438 2.01129C8.20797 0.673123 9.52764 0.636123 10.8658 1.90029C12.204 3.16446 12.241 4.48412 10.9768 5.82229L5.91397 11.1811C5.65497 11.4586 5.17397 11.7176 4.7978 11.7793L2.81214 12.1185C2.7073 12.1246 2.6148 12.137 2.51614 12.137ZM8.9233 1.89412C8.44847 1.89412 8.03531 2.19012 7.61597 2.63412L2.55314 7.99912C2.4298 8.12862 2.28797 8.43696 2.2633 8.61579L2.03514 10.6138C2.01047 10.8173 2.0598 10.9838 2.1708 11.0886C2.2818 11.1935 2.4483 11.2305 2.6518 11.1996L4.63747 10.8605C4.8163 10.8296 5.1123 10.6693 5.23564 10.5398L10.2985 5.18096C11.0631 4.36696 11.3406 3.61462 10.2245 2.56629C9.73114 2.09146 9.30564 1.89412 8.9233 1.89412Z" fill="#7E92A2" />
+                                                    <path d="M9.7928 6.85212C9.78047 6.85212 9.76197 6.85212 9.74964 6.85212C7.82564 6.66096 6.2778 5.19946 5.9818 3.28779C5.9448 3.03496 6.11747 2.80062 6.3703 2.75746C6.62314 2.72046 6.85747 2.89312 6.90064 3.14596C7.13497 4.63829 8.34364 5.78529 9.8483 5.93329C10.1011 5.95796 10.2861 6.18612 10.2615 6.43896C10.2306 6.67329 10.0271 6.85212 9.7928 6.85212Z" fill="#7E92A2" />
+                                                    <path d="M12.0498 14.1288H0.949805C0.696971 14.1288 0.487305 13.9191 0.487305 13.6663C0.487305 13.4135 0.696971 13.2038 0.949805 13.2038H12.0498C12.3026 13.2038 12.5123 13.4135 12.5123 13.6663C12.5123 13.9191 12.3026 14.1288 12.0498 14.1288Z" fill="#7E92A2" />
+                                                </svg>
+                                            </div>
+                                        )}
                                     </div>
-                                )
+                                );
                             })}
+
+
+
+
+
 
                             {/* Custom Categories */}
                             {customCategories.map((category) => (
