@@ -1,13 +1,12 @@
-
 import { ChevronDown, CreditCard, Droplet, LayoutGrid, LineChart, Settings } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import {
   Area,
   Bar,
+  BarChart,
   CartesianGrid,
   AreaChart as RechartsAreaChart,
-  BarChart as RechartsBarChart,
   ResponsiveContainer,
   XAxis,
   YAxis,
@@ -15,18 +14,18 @@ import {
 
 export default function AnalyticsPage() {
   return (
-    <div className="flex min-h-screen bg-white">
-      {/* Sidebar */}
-      <div className="w-[200px] max-h-full border-r border-gray-200 p-6 flex flex-col">
+    <div className="flex flex-col md:flex-row min-h-screen bg-white">
+      {/* Sidebar - hidden on mobile, shown on md and up */}
+      <div className="hidden md:flex w-[200px] border-r border-gray-200 p-6 flex-col h-screen sticky top-0">
         <div className="space-y-6 flex-1">
-          <Link href="/dashboard" className="pb-2">
+          <Link href="/dashbord" className="pb-2 block">
             <Image src="/logo.png" alt="Nereus Deep Work" width={200} height={70} />
           </Link>
-          <Link href="/dashboard" className="flex items-center text-gray-500 font-medium">
+          <Link href="/dashbord" className="flex items-center text-gray-500 font-medium">
             <LayoutGrid className="mr-3 h-5 w-5" />
             Dashboard
           </Link>
-          <Link href="/analytics" className="flex items-center text-blue-900 font-medium">
+          <Link href="/Analytics" className="flex items-center text-blue-900 font-medium">
             <LineChart className="mr-3 h-5 w-5" />
             Analytics
           </Link>
@@ -41,129 +40,171 @@ export default function AnalyticsPage() {
         </Link>
       </div>
 
+      {/* Mobile navigation */}
+      <div className="flex md:hidden items-center justify-between p-4 border-b border-gray-200">
+        <Link href="/dashbord" className="block">
+          <Image src="/logo.png" alt="Nereus Deep Work" width={120} height={40} />
+        </Link>
+        <div className="flex items-center space-x-4">
+          <Link href="/dashbord">
+            <LayoutGrid className="h-6 w-6 text-gray-500" />
+          </Link>
+          <Link href="/Analytics">
+            <LineChart className="h-6 w-6 text-blue-900" />
+          </Link>
+          <Link href="/premium">
+            <CreditCard className="h-6 w-6 text-gray-500" />
+          </Link>
+          <Link href="/settings">
+            <Settings className="h-6 w-6 text-gray-500" />
+          </Link>
+        </div>
+      </div>
+
       {/* Main Content */}
-      <div className="flex-1 relative">
-
-        {/* Deep Work Statistics */}
-        <div className="absolute left-[100px] top-[10px] w-[680px] h-[400px] bg-white border border-[#F3F3F3] rounded-[6px] shadow-sm p-6">
-          <div className="flex justify-between items-center w-full">
-            <h1 className="text-2xl font-semibold">Deep Work Statistics</h1>
-            <button className="flex items-center gap-1 px-3 py-1 rounded-md border">
-              Weekly <ChevronDown className="h-4 w-4" />
-            </button>
-          </div>
-
-          <div className="mt-6">
-            <div className="flex items-center gap-2 mb-4 justify-end">
-              <div className="w-3 h-3 rounded-full bg-[#7dd3fc]"></div>
-              <span>Deep Work</span>
-            </div>
-            <DeepWorkChart />
-          </div>
-        </div>
-
-        {/* Top Distractions */}
-        <div className="absolute left-[15px] top-[450px] w-[400px] h-[320px] bg-white border border-gray-200 rounded-lg p-6">
-          <h2 className="text-lg font-medium mb-6">Top Distractions Blocked Daily</h2>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span>Social</span>
-              <div className="w-[232px] h-8 bg-[#38B6FF] rounded-md flex items-center justify-center text-white">
-                6 hr 2 min
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>Text/Email</span>
-              <div className="w-[100px] h-8 bg-[#38B6FF] rounded-md flex items-center justify-center text-white">
-                34 min
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>TV/Video</span>
-              <div className="w-[160px] h-8 bg-[#38B6FF] rounded-md flex items-center justify-center text-white">
-                4 hr 43 min
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>Sports</span>
-              <div className="w-[180px] h-8 bg-[#38B6FF] rounded-md flex items-center justify-center text-white">
-                5 hr 12 min
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Focus Session Chart */}
-        <div className="absolute right-[310px] top-[450px] pb-4 w-[400px] h-[320px] bg-white border border-gray-200 rounded-lg p-6">
-          <h2 className="text-lg font-medium mb-6">Focus Session Hours (By Session Type)</h2>
-          <FocusSessionChart />
-        </div>
-
-        {/* Right sidebar with stats */}
-        <div className="absolute right-0 top-0 w-[300px] border-l border-gray-200 p-6 h-full">
-          {/* User profile */}
-          <div className="flex items-center mb-8 bg-[#F6FCFE] rounded-[16px] w-[280px] h-[73px] p-3">
-            <div className="flex items-center flex-1">
-              <div className="w-10 h-10 rounded-full bg-gray-300 mr-3 overflow-hidden">
-                <Image src="/da.png" alt="User Avatar" width={40} height={40} className="rounded-full object-cover" />
-              </div>
-              <div>
-                <div className="font-medium">Leonardo C</div>
-                <div className="text-sm text-gray-500">leonardocc@gmail.com</div>
-              </div>
-            </div>
-            <ChevronDown className="h-5 w-5 text-gray-500" />
-            <div className="flex items-center text-[#38B6FF]">
-              <Image src="/water.png" alt="Water" width={60} height={40} />
-            </div>
-          </div>
-
-          {/* Today's deep work */}
-          <div className="grid grid-rows-1 md:grid-row-3 gap-6">
-            {/* Deep Work */}
-            <div className="border rounded-lg p-6 text-center">
-              <div className="relative w-32 h-32 mx-auto">
-                <div className="absolute inset-0 flex items-center justify-center flex-col">
-                  <span className="text-4xl font-semibold">2.1</span>
-                  <span className="text-sm text-muted-foreground">hr</span>
+      <div className="flex-1 p-4">
+        <div className="flex flex-col lg:flex-row gap-4">
+          {/* Right sidebar with stats - appears first on mobile/tablet */}
+          <div className="w-full lg:w-[300px] lg:order-last lg:border-l border-gray-200 lg:pl-6">
+            {/* User profile */}
+            <div className="flex items-center mb-8 bg-[#F6FCFE] rounded-[16px] p-3">
+              <div className="flex items-center flex-1">
+                <div className="w-10 h-10 rounded-full bg-gray-300 mr-3 overflow-hidden">
+                  <Image src="/da.png" alt="User Avatar" width={40} height={40} className="rounded-full object-cover" />
                 </div>
-                <CircularProgress value={35} />
-              </div>
-              <h3 className="mt-4 font-medium">Deep Work</h3>
-              <p className="text-sm text-muted-foreground">Hours Today</p>
-            </div>
-
-            {/* Deep Work Streak */}
-            <div className="border rounded-lg p-6">
-              <div className="flex justify-between items-center">
                 <div>
-                  <span className="text-3xl font-semibold">03</span>
-                  <span className="text-sm text-muted-foreground ml-1">day</span>
+                  <div className="font-medium">Leonardo C</div>
+                  <div className="text-sm text-gray-500">leonardocc@gmail.com</div>
                 </div>
-                <Droplet className="h-5 w-5 text-[#7dd3fc]" />
               </div>
-              <p className="mt-2 text-sm">
-                Deep
-                <br />
-                Work Streak
-              </p>
+              <ChevronDown className="h-5 w-5 text-gray-500" />
+              <div className="flex items-center text-[#38B6FF]">
+                <Image src="/water.png" alt="Water" width={60} height={40} />
+              </div>
             </div>
 
-            {/* Bottles Removed */}
-            <div className="border rounded-lg p-6">
-              <div className="flex items-center">
-                <div className="text-[#7dd3fc] mr-2">
-                  <Image src="/water.png" alt="Water" width={60} height={40} />
+            {/* Today's deep work */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4 md:gap-6 mb-6 lg:mb-0">
+              {/* Deep Work */}
+              <div className="border rounded-lg p-4 md:p-6 text-center">
+                <div className="relative w-24 h-24 md:w-32 md:h-32 mx-auto">
+                  <div className="absolute inset-0 flex items-center justify-center flex-col">
+                    <span className="text-3xl md:text-4xl font-semibold">2.1</span>
+                    <span className="text-sm text-muted-foreground">hr</span>
+                  </div>
+                  <CircularProgress value={35} />
                 </div>
-                <span className="text-3xl font-semibold">32</span>
+                <h3 className="mt-4 font-medium">Deep Work</h3>
+                <p className="text-sm text-muted-foreground">Hours Today</p>
               </div>
-              <p className="mt-2 text-sm">
-                Bottles
-                <br />
-                removed from
-                <br />
-                the ocean
-              </p>
+
+              {/* Deep Work Streak */}
+              <div className="border rounded-lg p-4 md:p-6">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <span className="text-2xl md:text-3xl font-semibold">03</span>
+                    <span className="text-sm text-muted-foreground ml-1">day</span>
+                  </div>
+                  <Droplet className="h-5 w-5 text-[#7dd3fc]" />
+                </div>
+                <p className="mt-2 text-sm">
+                  Deep
+                  <br />
+                  Work Streak
+                </p>
+              </div>
+
+              {/* Bottles Removed */}
+              <div className="border rounded-lg p-4 md:p-6">
+                <div className="flex items-center">
+                  <div className="text-[#7dd3fc] mr-2">
+                    <Image src="/water.png" alt="Water" width={60} height={40} />
+                  </div>
+                  <span className="text-2xl md:text-3xl font-semibold">32</span>
+                </div>
+                <p className="mt-2 text-sm">
+                  Bottles
+                  <br />
+                  removed from
+                  <br />
+                  the ocean
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Left and center content */}
+          <div className="flex-1 space-y-4">
+            {/* Deep Work Statistics */}
+            <div className="bg-white border border-[#F3F3F3] rounded-[6px] shadow-sm p-4 md:p-6 lg:p-10">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full mb-4">
+                <h1 className="text-xl md:text-2xl font-semibold mb-2 sm:mb-0">Deep Work Statistics</h1>
+                <button className="flex items-center gap-1 px-3 py-1 rounded-md border">
+                  Weekly <ChevronDown className="h-4 w-4" />
+                </button>
+              </div>
+
+              <div className="mt-2 md:mt-6">
+                <div className="flex items-center gap-2 mb-4 justify-end">
+                  <div className="w-3 h-3 rounded-full bg-[#7dd3fc]"></div>
+                  <span>Deep Work</span>
+                </div>
+                <DeepWorkChart />
+              </div>
+            </div>
+
+            {/* Charts row */}
+            <div className="flex flex-col md:flex-row gap-4">
+              {/* Top Distractions */}
+              <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-lg flex-1">
+                <h2 className="text-sm font-medium mb-4 pb-2 text-center">Top Distractions Blocked Daily</h2>
+                <div className="space-y-4 md:space-y-6">
+                  {/* Social */}
+                  <div className="flex items-center">
+                    <span className="w-20 text-xs">Social</span>
+                    <div className="relative w-full bg-[#EDF8FF] h-6 rounded-md">
+                      <div className="w-[70%] h-full bg-[#38B6FF] rounded-md flex items-center justify-center text-white text-xs shadow-md">
+                        6 hr 2 min
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Text/Email */}
+                  <div className="flex items-center">
+                    <span className="w-20 text-xs">Text/Email</span>
+                    <div className="relative w-full bg-[#EDF8FF] h-6 rounded-md">
+                      <div className="w-[30%] h-full bg-[#38B6FF] rounded-md flex items-center justify-center text-white text-xs shadow-md">
+                        34 min
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* TV/Video */}
+                  <div className="flex items-center">
+                    <span className="w-20 text-xs">TV/Video</span>
+                    <div className="relative w-full bg-[#EDF8FF] h-6 rounded-md">
+                      <div className="w-[55%] h-full bg-[#38B6FF] rounded-md flex items-center justify-center text-white text-xs shadow-md">
+                        4 hr 43 min
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Sports */}
+                  <div className="flex items-center">
+                    <span className="w-20 text-xs">Sports</span>
+                    <div className="relative w-full bg-[#EDF8FF] h-6 rounded-md">
+                      <div className="w-[60%] h-full bg-[#38B6FF] rounded-md flex items-center justify-center text-white text-xs shadow-md">
+                        5 hr 12 min
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Focus Session Chart */}
+              <div className="flex-1">
+                <FocusSessionChart />
+              </div>
             </div>
           </div>
         </div>
@@ -219,9 +260,9 @@ function DeepWorkChart() {
   ]
 
   return (
-    <div className="h-64 relative">
-      {/* Y-axis labels */}
-      <div className="absolute left-0 top-0 bottom-0 flex flex-col justify-between text-sm text-gray-500">
+    <div className="h-48 md:h-64 relative">
+      {/* Y-axis labels - hidden on small screens */}
+      <div className="absolute left-0 top-0 bottom-0 hidden sm:flex flex-col justify-between text-sm text-gray-500">
         <div>10 hr</div>
         <div>8 hr</div>
         <div>6 hr</div>
@@ -231,14 +272,14 @@ function DeepWorkChart() {
       </div>
 
       {/* 4 hours marker */}
-      <div className="absolute left-12 right-0 top-[40%] flex items-center">
-        <div className="border-l border-dashed border-gray-300 h-full absolute left-[90px] top-[-40px] bottom-0 z-0"></div>
-        <div className="absolute left-[70px] top-[-20px] text-xs text-[#7dd3fc] flex items-center">
+      <div className="absolute left-0 sm:left-12 right-0 top-[40%] flex items-center">
+        <div className="border-l border-dashed border-gray-300 h-full absolute left-[60px] sm:left-[90px] top-[-40px] bottom-0 z-0"></div>
+        <div className="absolute left-[40px] sm:left-[70px] top-[-20px] text-xs text-[#7dd3fc] flex items-center">
           <span className="text-[#7dd3fc] mr-1">+</span>4 hours
         </div>
       </div>
 
-      <div className="ml-12 h-full">
+      <div className="ml-0 sm:ml-12 h-full">
         <ResponsiveContainer width="100%" height="100%">
           <RechartsAreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
             <defs>
@@ -280,66 +321,64 @@ function DeepWorkChart() {
   )
 }
 
+const data = [
+  { type: "Econ", hours: 4.5, color: "#e0e1f5", textColor: "#717EEE" },
+  { type: "Gaming", hours: 4.8, color: "#ffecd1", textColor: "#FFB057" },
+  { type: "High", hours: 3.6, color: "#d1f7dd", textColor: "#68CD80" },
+  { type: "Development", hours: 4.2, color: "#d1f0f7", textColor: "#37B8FC" },
+  { type: "Frontend", hours: 5.1, color: "#ffd1d1", textColor: "#FF576B" },
+  { type: "Gaming", hours: 4.0, color: "#ffecd1", textColor: "#FFB057" },
+  { type: "Development", hours: 6.0, color: "#d1f0f7", textColor: "#37B8FC" },
+]
+
 function FocusSessionChart() {
-  const data = [
-    { type: "Econ", hours: 2.5, color: "#e0e1f5" },
-    { type: "Gaming", hours: 3.2, color: "#ffecd1" },
-    { type: "High", hours: 2.8, color: "#d1f7dd" },
-    { type: "Development", hours: 3.5, color: "#d1f0f7" },
-    { type: "Frontend", hours: 4.2, color: "#ffd1d1" },
-    { type: "Gaming", hours: 3.0, color: "#ffecd1" },
-    { type: "Development", hours: 5.5, color: "#d1f0f7" },
-  ]
-
   return (
-    <div className="h-48 relative">
-      {/* Y-axis labels */}
-      <div className="absolute left-0 top-0 bottom-0 flex flex-col justify-between text-sm text-gray-500">
-        <div>6 hr</div>
-        <div>4 hr</div>
-        <div>2 hr</div>
-        <div>1 hr</div>
-      </div>
-
-      <div className="ml-12 h-full">
+    <div className="bg-white rounded-lg p-4 shadow-md h-full">
+      <h2 className="text-sm md:text-lg font-medium mb-2 md:mb-4 text-center">Focus Session Hours (By Session Type)</h2>
+      <div className="h-36 md:h-48 w-full flex">
+        <div className="flex flex-col pt-2 justify-between text-xs text-gray-500 font-bold h-full">
+          <div className="flex items-center justify-start whitespace-nowrap" style={{ height: "16.66%" }}>
+            <span>6 hr</span>
+          </div>
+          <div className="flex items-center justify-start whitespace-nowrap" style={{ height: "16.66%" }}>
+            <span>4 hr</span>
+          </div>
+          <div className="flex items-center justify-start whitespace-nowrap" style={{ height: "16.66%" }}>
+            <span>2 hr</span>
+          </div>
+          <div className="flex items-center justify-start whitespace-nowrap" style={{ height: "16.66%" }}>
+            <span>1 hr</span>
+          </div>
+        </div>
         <ResponsiveContainer width="100%" height="100%">
-          <RechartsBarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }} barSize={30}>
-            <CartesianGrid vertical={false} stroke="#f5f5f5" />
-            <XAxis
-              dataKey="type"
-              axisLine={false}
-              tickLine={false}
-              tick={({ x, y, payload, index }) => {
-                // Get the color for the current bar
-                const color = data[index]?.color || "#6b7280"
-
+          <BarChart data={data} margin={{ top: 10, right: 10, left: 10 }} barSize={30} maxBarSize={30}>
+            <XAxis dataKey="type" axisLine={false} tickLine={false} tick={false} />
+            <YAxis domain={[0, 6]} ticks={[1, 2, 4, 6]} hide />
+            <Bar
+              dataKey="hours"
+              radius={[6, 6, 0, 0]}
+              shape={(props) => {
+                const { x, y, width, height, payload } = props
                 return (
-                  <g transform={`translate(${x},${y + 10})`}>
+                  <g>
+                    <rect x={x} y={y} width={width} height={height} fill={payload.color} rx={6} ry={6} />
                     <text
-                      x={0}
-                      y={0}
-                      dy={16}
+                      x={x + width / 2}
+                      y={y + height / 2}
                       textAnchor="middle"
-                      fill={color}
-                      style={{ fontSize: "10px", writingMode: "vertical-rl", textOrientation: "mixed" }}
+                      dy={5}
+                      fontSize={12}
+                      fill={payload.textColor}
+                      fontWeight="bold"
+                      transform={`rotate(270, ${x + width / 2}, ${y + height / 2})`}
                     >
-                      {payload.value}
+                      {payload.type}
                     </text>
                   </g>
                 )
               }}
             />
-            <YAxis hide />
-            <Bar
-              dataKey="hours"
-              radius={[4, 4, 0, 0]}
-              fill="#8884d8"
-              shape={(props) => {
-                const { x, y, width, height, payload } = props
-                return <rect x={x} y={y} width={width} height={height} fill={payload.color} rx={4} ry={4} />
-              }}
-            />
-          </RechartsBarChart>
+          </BarChart>
         </ResponsiveContainer>
       </div>
     </div>
