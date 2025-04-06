@@ -102,7 +102,7 @@ export default function SignUpPage() {
             </div>
           </div>
 
-          <Link href="../dashbord">
+          <Link href="../tutorial">
 
 
             <button
