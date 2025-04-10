@@ -4,9 +4,9 @@ import { Plus, Trash2, X } from "lucide-react"
 import Image from "next/image"
 import { useState } from "react"
 
-import { Button } from "../pages/ui/button"
-import { Input } from "../pages/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../pages/ui/tabs"
+import { Button } from "./ui/button"
+import { Input } from "./ui/input"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
 
 interface SocialItem {
   name: string

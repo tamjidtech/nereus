@@ -2,8 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="relative flex flex-col items-center justify-center text-center min-h-screen px-4">
-
+    <div className="flex flex-col items-center justify-center min-h-screen text-center px-4">
       <div className="absolute top-4 right-4">
         <Link
           href="/dashbord"
@@ -12,23 +11,22 @@ export default function Home() {
           Go to Dashboard
         </Link>
       </div>
+      <div className="w-full max-w-md mb-12">
+        <div className="border-b-2 border-indigo-600 w-64 mx-auto mb-8"></div>
 
-      <div className="mb-16 max-w-md">
-        <h2 className="text-2xl md:text-3xl font-medium text-gray-700 mb-8">
-          Deep Work was coined by Dr. Cal Newport and means focused, undistracted work.
+        <h2 className="text-2xl font-semibold text-gray-700 mb-8">
+          Before we start, answer a few questions to personalize your Deep Work experience.
         </h2>
-        <p className="text-xl md:text-2xl text-gray-700">
-          2-4 hour bursts of Deep Work per day is associated with 51% greater productivity.
-        </p>
       </div>
+
+
 
       <Link
         href="/onboarding"
-        className="bg-blue-500 text-white font-medium px-8 py-3 rounded-full hover:bg-blue-600 transition-colors"
+        className="w-full max-w-sm bg-blue-500 text-white font-medium py-3 rounded-full hover:bg-blue-600 transition-colors text-center"
       >
-        Get Started
+        Next
       </Link>
-
     </div>
   );
 }

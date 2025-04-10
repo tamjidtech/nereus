@@ -36,10 +36,10 @@ export default function SignUpPage() {
           </Link>
         </div>
 
-        <h1 className="text-2xl font-bold text-center mb-8">Sign up</h1>
+        <h1 className="text-2xl font-bold text-left mb-8 p-1">Sign up</h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
+          <div className="space-y-2 p-1">
             <label htmlFor="email" className="block text-gray-700">
               Enter your email
             </label>
@@ -54,7 +54,7 @@ export default function SignUpPage() {
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 p-1">
             <label htmlFor="password" className="block text-gray-700">
               Enter your password
             </label>
@@ -78,7 +78,7 @@ export default function SignUpPage() {
             </div>
           </div>
 
-          <div className="space-y-2 pb-6">
+          <div className="space-y-2 pb-8 p-1 p">
             <label htmlFor="confirmPassword" className="block text-gray-700">
               Confirm password
             </label>
@@ -102,7 +102,7 @@ export default function SignUpPage() {
             </div>
           </div>
 
-          <Link href="../tutorial">
+          <Link href="../dashbord">
 
 
             <button
@@ -115,7 +115,7 @@ export default function SignUpPage() {
           </Link>
         </form>
 
-        <div className="mt-6 text-center text-gray-600">
+        <div className="mt-6 text-center p-4 text-gray-600">
           Already have an account?{" "}
           <Link href="../signin" className="text-gray-800 font-medium">
             Log in

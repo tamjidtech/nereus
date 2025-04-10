@@ -28,7 +28,7 @@ export default function SignInPage() {
           </Link>
         </div>
 
-        <h1 className="text-2xl font-bold text-center mb-8">Sign in</h1>
+        <h1 className="text-2xl font-bold text-left mb-8">Sign in</h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
@@ -68,7 +68,7 @@ export default function SignInPage() {
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
-            <div className="flex justify-end">
+            <div className="flex justify-end p-5">
               <Link href="../forgot-password" className="text-sm text-gray-600">
                 Forgot password?
               </Link>

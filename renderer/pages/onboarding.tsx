@@ -1,9 +1,9 @@
 import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import DescribeYouQuestion from "../pages/onboarding/describe-you-question";
-import FreeTimeQuestion from "../pages/onboarding/free-time-question";
-import OnboardingIntro from "../pages/onboarding/onboarding-intro";
+import DescribeYouQuestion from "../components/onboarding/describe-you-question";
+import FreeTimeQuestion from "../components/onboarding/free-time-question";
+import OnboardingIntro from "../components/onboarding/onboarding-intro";
 export default function OnboardingPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
@@ -50,8 +50,8 @@ export default function OnboardingPage() {
         )}
 
         {/* Step Content */}
-        {step === 1 && <OnboardingIntro onNext={handleNext} onBack={handleBack} />}  {/* Add onBack prop */}
-        {step === 2 && (
+
+        {step === 1 && (
           <FreeTimeQuestion
             selectedOption={answers.freeTime}
             onSelect={(option) => updateAnswer("freeTime", option)}
@@ -59,7 +59,7 @@ export default function OnboardingPage() {
             onBack={handleBack}
           />
         )}
-        {step === 3 && (
+        {step === 2 && (
           <DescribeYouQuestion
             selectedOption={answers.description}
             onSelect={(option) => updateAnswer("description", option)}
@@ -67,6 +67,7 @@ export default function OnboardingPage() {
             onBack={handleBack}
           />
         )}
+        {step === 3 && <OnboardingIntro onNext={handleNext} onBack={handleBack} />}  {/* Add onBack prop */}
       </div>
     </div>
   );
