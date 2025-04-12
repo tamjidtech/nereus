@@ -1,4 +1,4 @@
-
+"use client"
 
 import { Plus, Trash2, X } from "lucide-react"
 import Image from "next/image"
@@ -103,11 +103,7 @@ export function SocialDropdown({ isOpen, onClose }: { isOpen: boolean; onClose: 
                   </div>
                   <span>Slack</span>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => handleAddApp({ name: "Slack", icon: "/sl.png" })}
-                >
+                <Button variant="ghost" size="icon" onClick={() => handleAddApp({ name: "Slack", icon: "/sl.png" })}>
                   <Plus className="h-5 w-5 text-gray-500" />
                 </Button>
               </div>
@@ -179,9 +175,7 @@ export function SocialDropdown({ isOpen, onClose }: { isOpen: boolean; onClose: 
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() =>
-                    handleAddWebsite({ name: "linkedin.com", icon: "/in.png" })
-                  }
+                  onClick={() => handleAddWebsite({ name: "linkedin.com", icon: "/in.png" })}
                 >
                   <Plus className="h-5 w-5 text-gray-500" />
                 </Button>
@@ -210,4 +204,3 @@ export function SocialDropdown({ isOpen, onClose }: { isOpen: boolean; onClose: 
     </div>
   )
 }
-

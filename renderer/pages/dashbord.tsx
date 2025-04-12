@@ -2,6 +2,7 @@
 
 import { ChevronDown, Play, Plus } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 import LeftSide from "../components/leftsidebar"
 import { SocialDropdown } from "../components/social-dropdown"
@@ -27,16 +28,19 @@ export default function Dashboard() {
     const [restTime, setRestTime] = useState("5 : 00")
     const [isSocialDropdownOpen, setIsSocialDropdownOpen] = useState(false)
 
-    // Tutorial state
     const [showTutorial, setShowTutorial] = useState(false)
     const [tutorialStep, setTutorialStep] = useState(1)
     const totalTutorialSteps = 5
 
-    // Show tutorial on first load
     useEffect(() => {
         const hasSeenTutorial = localStorage.getItem("hasSeenTutorial")
-        if (!hasSeenTutorial) {
+        const isNewUser = localStorage.getItem("isNewUser")
+
+        if (!hasSeenTutorial || isNewUser === "true") {
             setShowTutorial(true)
+            if (isNewUser === "true") {
+                localStorage.setItem("isNewUser", "false")
+            }
         }
     }, [])
 
@@ -75,10 +79,16 @@ export default function Dashboard() {
         setSessionGoal("Econ")
     }
 
-    // Tutorial handlers
     const skipTutorial = () => {
         setShowTutorial(false)
         localStorage.setItem("hasSeenTutorial", "true")
+    }
+
+    const resetTutorial = () => {
+        localStorage.removeItem("hasSeenTutorial")
+        localStorage.setItem("isNewUser", "true")
+        setShowTutorial(true)
+        setTutorialStep(1)
     }
 
     const nextTutorialStep = () => {
@@ -98,9 +108,8 @@ export default function Dashboard() {
     return (
         <div className="flex flex-col lg:flex-row min-h-screen bg-white">
             {/* Left Sidebar */}
-            <div className="lg:w-[280px]">
-                <LeftSide />
-            </div>
+
+            <LeftSide />
 
             {/* Main + Right Content */}
             <div className="flex flex-col-reverse lg:flex-row flex-1">
@@ -113,12 +122,12 @@ export default function Dashboard() {
 
                         <div className="flex flex-col sm:flex-row items-center justify-center mb-12 gap-4 relative">
                             {showTutorial && tutorialStep === 1 && (
-                                <div className="absolute left-0 sm:left-auto sm:right-full sm:mr-2 top-1/2 sm:top-auto sm:-translate-y-0 -translate-y-1/2 flex items-center">
-                                    <div className="bg-white p-3 rounded-md shadow-lg border border-gray-200 max-w-[200px] z-50">
-                                        <p className="text-sm font-medium">Enter your Deep Work session goal here</p>
-                                    </div>
-                                    <div className="w-6 h-6 flex items-center justify-center">
-                                        <div className="w-4 h-4 border-t-2 border-r-2 border-black transform rotate-45"></div>
+                                <div className="absolute left-2 md:-left-6 max-w-xs ">
+                                    <div className="relative flex items-center">
+                                        <div className="bg-white shadow-lg rounded-lg p-4 text-sm font-medium text-center break-words w-full">
+                                            Enter your Deep Work<br />session goal here
+                                        </div>
+                                        <div className="absolute -right-6 top-1/2 -translate-y-1/2 text-[24px]">→</div>
                                     </div>
                                 </div>
                             )}
@@ -133,16 +142,21 @@ export default function Dashboard() {
 
                             <div className="relative">
                                 {showTutorial && tutorialStep === 2 && (
-                                    <div className="absolute right-full mr-2 top-1/2 -translate-y-1/2 flex items-center">
-                                        <div className="bg-white p-3 rounded-md shadow-lg border border-gray-200 max-w-[200px] z-50">
-                                            <p className="text-sm font-medium">
-                                                Press enter for AI to block distraction categories based on your task
-                                            </p>
-                                        </div>
-                                        <div className="w-6 h-6 flex items-center justify-center">
-                                            <div className="w-4 h-4 border-t-2 border-r-2 border-black transform rotate-45"></div>
+                                    <div className="absolute -top-6 left-[130px] whitespace-nowrap">
+                                        <div className="relative flex items-center">
+                                            <div className="absolute -left-7 top-1/2 -translate-y-1/2 text-black text-[24px]">
+                                                ←
+                                            </div>
+
+                                            <div className="bg-white shadow-lg rounded-lg p-4 text-sm font-medium text-center">
+                                                Press enter for AI to <br />
+                                                block distraction <br />
+                                                categories based on <br />
+                                                your task
+                                            </div>
                                         </div>
                                     </div>
+
                                 )}
                                 <button className="w-full sm:w-auto bg-[#38B6FF] text-white px-6 py-4 rounded-lg font-medium text-lg">
                                     Enter
@@ -155,18 +169,23 @@ export default function Dashboard() {
                                 <h2 className="text-xl font-medium text-blue-900">Distractions</h2>
                                 <ChevronDown className="ml-2 h-5 w-5 text-blue-900" />
                             </div>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center relative">
-                                {showTutorial && tutorialStep === 3 && (
-                                    <div className="absolute right-full mr-2 top-1/2 -translate-y-1/2 flex items-center">
-                                        <div className="bg-white p-3 rounded-md shadow-lg border border-gray-200 max-w-[200px] z-50">
-                                            <p className="text-sm font-medium">A check means a distraction category is blocked</p>
+                            {showTutorial && tutorialStep === 3 && (
+                                <div className="absolute -left-10 whitespace-nowrap">
+                                    <div className="relative flex items-center">
+                                        <div className="bg-white shadow-lg rounded-lg p-4">
+                                            <div className="text-[14px] leading-[15px] font-medium text-center">
+                                                A check means a <br />distraction category is <br />blocked
+                                            </div>
                                         </div>
-                                        <div className="w-6 h-6 flex items-center justify-center">
-                                            <div className="w-4 h-4 border-t-2 border-r-2 border-black transform rotate-45"></div>
+                                        <div className="absolute -right-5 top-8 -translate-y-1/2 text-[24px]">
+                                            →
                                         </div>
                                     </div>
-                                )}
+                                </div>
+
+                            )}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 left-8 relative">
+
 
                                 {["Social", "Shopping", "Text/Email", "Sports", "TV/Video", "News"].map((item) => {
                                     const key = item.toLowerCase().replace("/", "") as DistractionKey
@@ -180,7 +199,6 @@ export default function Dashboard() {
                                             />
                                             <span className="ml-2">{item}</span>
 
-                                            {/* SVG icon for all items */}
                                             <div className="ml-2 relative">
                                                 <button onClick={() => setIsSocialDropdownOpen((prev) => !prev)}>
                                                     <Image src="/1.svg" alt="" width="13" height="15" />
@@ -242,16 +260,21 @@ export default function Dashboard() {
 
                         <div className="flex justify-center items-center mb-8 relative">
                             {showTutorial && tutorialStep === 4 && (
-                                <div className="absolute left-full ml-2 top-1/2 -translate-y-1/2 flex items-center">
-                                    <div className="w-6 h-6 flex items-center justify-center">
-                                        <div className="w-4 h-4 border-t-2 border-r-2 border-black transform -rotate-135"></div>
-                                    </div>
-                                    <div className="bg-white p-3 rounded-md shadow-lg border border-gray-200 max-w-[200px] z-50">
-                                        <p className="text-sm font-medium">
-                                            Tab lock prevents you from opening additional applications/tabs
-                                        </p>
+                                <div className="absolute -mt-10 right-[130px] whitespace-nowrap">
+                                    <div className="relative">
+                                        <div className="absolute -left-6 top-16 -translate-y-1/2 text-black text-[26px]">
+                                            ←
+                                        </div>
+
+                                        <div className="bg-white shadow-lg rounded-lg p-4">
+                                            <div className="text-[14px] leading-[18px] font-medium text-center">
+                                                Tab lock prevents you <br />from opening<br />additional <br />applications/tabs
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+
                             )}
 
                             <span className="text-sm mr-2">Tab Lock</span>
@@ -269,14 +292,19 @@ export default function Dashboard() {
 
                         <div className="flex flex-col items-center mb-12 relative">
                             {showTutorial && tutorialStep === 5 && (
-                                <div className="absolute left-full ml-2 top-1/2 -translate-y-1/2 flex items-center">
-                                    <div className="w-6 h-6 flex items-center justify-center">
-                                        <div className="w-4 h-4 border-t-2 border-r-2 border-black transform -rotate-135"></div>
+                                <div className="absolute top-12  -right-[35px] whitespace-nowrap">
+                                    <div className="absolute -left-6 top-10 -translate-y-1/2 text-black text-[26px]">
+                                        ←
                                     </div>
-                                    <div className="bg-white p-3 rounded-md shadow-lg border border-gray-200 max-w-[200px] z-50">
-                                        <p className="text-sm font-medium">Set work/rest time and start your session!</p>
+
+
+
+                                    <div className="bg-white shadow-lg rounded-lg p-4 text-sm font-medium text-center">
+                                        Set work/rest time and<br />start your session!
                                     </div>
+
                                 </div>
+
                             )}
 
                             <div className="flex flex-col sm:flex-row items-center gap-6 mb-6">
@@ -302,10 +330,11 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                             </div>
-
-                            <button className="w-full sm:w-auto bg-[#38B6FF] text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-[#1E90FF] transition">
-                                Start Session (+30)
-                            </button>
+                            <Link href="/activation">
+                                <button className="w-full sm:w-auto bg-[#38B6FF] text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-[#1E90FF] transition">
+                                    Start Session (+30)
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 </main>
@@ -400,9 +429,12 @@ export default function Dashboard() {
                 </aside>
             </div>
 
-            {/* Tutorial Controls */}
+
+
+            {/* Bottom tutorial navigation box */}
             {showTutorial && (
                 <div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-white rounded-lg shadow-lg p-4 flex items-center gap-4 z-50">
+                    {/* Skip button */}
                     <button
                         onClick={skipTutorial}
                         className="bg-gray-100 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200"
@@ -410,6 +442,7 @@ export default function Dashboard() {
                         Skip
                     </button>
 
+                    {/* Step indicators */}
                     <div className="flex gap-1">
                         {Array.from({ length: totalTutorialSteps }).map((_, i) => (
                             <div
@@ -419,6 +452,7 @@ export default function Dashboard() {
                         ))}
                     </div>
 
+                    {/* Navigation buttons */}
                     <div className="flex gap-2">
                         {tutorialStep > 1 && (
                             <button
@@ -428,7 +462,6 @@ export default function Dashboard() {
                                 Previous
                             </button>
                         )}
-
                         <button
                             onClick={nextTutorialStep}
                             className="bg-[#38B6FF] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-[#2AA3F3]"

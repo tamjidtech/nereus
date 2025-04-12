@@ -1,34 +1,63 @@
-import type { ReactNode } from "react"
+import type React from "react"
 
 interface TutorialTooltipProps {
-  children: ReactNode
   position: "left" | "right" | "top" | "bottom"
-  className?: string
+  content: string
+  arrowPosition?: "start" | "center" | "end"
 }
 
-export function TutorialTooltip({ children, position, className = "" }: TutorialTooltipProps) {
-  const positionClasses = {
-    left: "right-full mr-4",
-    right: "left-full ml-4",
-    top: "bottom-full mb-4",
-    bottom: "top-full mt-4",
+export const TutorialTooltip: React.FC<TutorialTooltipProps> = ({
+  position,
+  content,
+  arrowPosition = "center",
+}) => {
+  const getPositionClasses = () => {
+    switch (position) {
+      case "left":
+        return "right-full mr-2"
+      case "right":
+        return "left-full ml-2"
+      case "top":
+        return "bottom-full mb-2 left-1/2 -translate-x-1/2"
+      case "bottom":
+        return "top-full mt-2 left-1/2 -translate-x-1/2"
+      default:
+        return "right-full mr-2"
+    }
   }
 
-  const arrowClasses = {
-    left: "right-[-12px] top-1/2 -translate-y-1/2 border-l-white border-t-transparent border-b-transparent border-r-transparent",
-    right:
-      "left-[-12px] top-1/2 -translate-y-1/2 border-r-white border-t-transparent border-b-transparent border-l-transparent",
-    top: "bottom-[-12px] left-1/2 -translate-x-1/2 border-t-white border-l-transparent border-r-transparent border-b-transparent",
-    bottom:
-      "top-[-12px] left-1/2 -translate-x-1/2 border-b-white border-l-transparent border-r-transparent border-t-transparent",
+  const getArrowClasses = () => {
+    const baseClasses = "w-4 h-4 border-t-2 border-r-2 border-black"
+
+    switch (position) {
+      case "left":
+        return `${baseClasses} transform rotate-45`
+      case "right":
+        return `${baseClasses} transform -rotate-135`
+      case "top":
+        return `${baseClasses} transform rotate-135`
+      case "bottom":
+        return `${baseClasses} transform -rotate-45`
+      default:
+        return `${baseClasses} transform rotate-45`
+    }
   }
 
   return (
-    <div
-      className={`absolute z-50 bg-white border border-gray-200 rounded-md p-3 shadow-lg max-w-xs ${positionClasses[position]} ${className}`}
-    >
-      <div className="text-sm font-medium text-gray-800">{children}</div>
-      <div className={`absolute w-0 h-0 border-[6px] ${arrowClasses[position]}`} style={{ zIndex: 51 }}></div>
+    <div className={`absolute ${getPositionClasses()} top-1/2 -translate-y-1/2 flex items-center z-50`}>
+      {position === "right" && (
+        <div className="w-6 h-6 flex items-center justify-center">
+          <div className={getArrowClasses()}></div>
+        </div>
+      )}
+      <div className="bg-white p-3 rounded-md shadow-lg border border-gray-200 max-w-[200px]">
+        <p className="text-sm font-medium">{content}</p>
+      </div>
+      {position === "left" && (
+        <div className="w-6 h-6 flex items-center justify-center">
+          <div className={getArrowClasses()}></div>
+        </div>
+      )}
     </div>
   )
 }

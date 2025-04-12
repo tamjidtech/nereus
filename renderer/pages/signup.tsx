@@ -4,6 +4,13 @@ import Link from "next/link"
 import type React from "react"
 import { useState } from "react"
 
+function handleSuccessfulSignup(userData: any) {
+  localStorage.setItem("isNewUser", "true")
+
+
+  window.location.href = "/dashbord"
+}
+
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -21,8 +28,20 @@ export default function SignUpPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle sign up logic
-    console.log("Sign up with:", email, password, confirmPassword)
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.")
+      return
+    }
+
+    const userData = {
+      email,
+      password,
+    }
+
+    console.log("Sign up with:", userData)
+
+    handleSuccessfulSignup(userData)
   }
 
   return (
@@ -31,8 +50,6 @@ export default function SignUpPage() {
         <div className="flex justify-center mb-8">
           <Link href="../home">
             <Image src="/logo.png" alt="Nereus Deep Work" width={250} height={80} />
-
-
           </Link>
         </div>
 
@@ -78,7 +95,7 @@ export default function SignUpPage() {
             </div>
           </div>
 
-          <div className="space-y-2 pb-8 p-1 p">
+          <div className="space-y-2 pb-8 p-1">
             <label htmlFor="confirmPassword" className="block text-gray-700">
               Confirm password
             </label>
@@ -102,17 +119,12 @@ export default function SignUpPage() {
             </div>
           </div>
 
-          <Link href="../dashbord">
-
-
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white font-medium py-3 rounded-md hover:bg-blue-600 transition-colors"
-            >
-              Sign up
-            </button>
-
-          </Link>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white font-medium py-3 rounded-md hover:bg-blue-600 transition-colors"
+          >
+            Sign up
+          </button>
         </form>
 
         <div className="mt-6 text-center p-4 text-gray-600">

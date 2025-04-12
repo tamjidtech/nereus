@@ -22,7 +22,6 @@ export default function AnalyticsPage() {
       {/* Main Content */}
       <div className="flex-1 p-4">
         <div className="flex flex-col lg:flex-row gap-4">
-          {/* Right sidebar with stats - appears first on mobile/tablet */}
           <div className="w-full lg:w-[300px] lg:order-last lg:border-l border-gray-200 lg:pl-6">
             {/* User profile */}
             <div className="flex items-center mb-8 bg-[#F6FCFE] rounded-[16px] p-3">

@@ -17,7 +17,7 @@ export default function Premium() {
 
                 {/* Header */}
                 <div className="flex justify-center items-center mb-12">
-                    <h1 className="text-2xl md:text-3xl font-bold text-[#2d4b6e] text-center">
+                    <h1 className="text-2xl md:text-3xl pt-5 font-bold text-[#2d4b6e] text-center">
                         What's your time worth?
                     </h1>
                 </div>

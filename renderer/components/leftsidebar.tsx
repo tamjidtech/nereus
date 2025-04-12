@@ -1,32 +1,25 @@
-import { CreditCard, LayoutGrid, LineChart, Menu, Settings, X } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useState } from 'react'
+"use client"
+
+import { CreditCard, LayoutGrid, LineChart, Menu, Settings, X } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { useState } from "react"
 
 const LeftSidebar = () => {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [rightSidebarOpen, setRightSidebarOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false)
+    const [rightSidebarOpen, setRightSidebarOpen] = useState(false)
 
     return (
         <div className="flex flex-col md:flex-row lg:min-h-screen bg-white relative">
-
             {/* Mobile Header */}
             <div className="md:hidden flex items-center justify-between p-4 border-b">
-                <button
-                    onClick={() => setSidebarOpen(true)}
-                    className="p-2 rounded-md hover:bg-gray-100"
-                >
+                <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-md hover:bg-gray-100">
                     <Menu className="h-6 w-6" />
                 </button>
                 <Link href="../home">
                     <Image src="/logo.png" alt="Nereus Deep Work" width={150} height={50} />
                 </Link>
-                <button
-                    onClick={() => setRightSidebarOpen(true)}
-                    className="p-2 rounded-md hover:bg-gray-100"
-                >
-                </button>
-
+                <button onClick={() => setRightSidebarOpen(true)} className="p-2 rounded-md hover:bg-gray-100"></button>
             </div>
 
             {/* Left Sidebar - Desktop */}
@@ -55,11 +48,12 @@ const LeftSidebar = () => {
             </div>
 
             {/* Left Sidebar - Mobile */}
-            <div className={`fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity duration-300 ${sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+            <div
+                className={`fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity duration-300 ${sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
                 onClick={() => setSidebarOpen(false)}
             >
                 <div
-                    className={`absolute top-0 left-0 w-64 h-full bg-white transform transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+                    className={`absolute top-0 left-0 w-64 h-full bg-white transform transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
                     onClick={(e) => e.stopPropagation()}
                 >
                     <div className="p-4 border-b flex justify-between items-center">
@@ -89,9 +83,8 @@ const LeftSidebar = () => {
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }
 
-export default LeftSidebar;
+export default LeftSidebar
