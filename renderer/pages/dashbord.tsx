@@ -3,7 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import LeftSide from "../components/leftsidebar"
-
+import { SocialDropdown } from "../components/social-dropdown"
 type DistractionKey = "social" | "textEmail" | "tvVideo" | "shopping" | "sports" | "news"
 
 export default function Dashboard() {
@@ -267,6 +267,7 @@ export default function Dashboard() {
                                                             )}
                                                         </div>
                                                         <span className="text-sm font-medium">{item.label}</span>
+
                                                         <button className="ml-1 text-gray-400 hover:text-gray-600">
                                                             <Image src="/1.svg" alt="" width="13" height="15" />
                                                         </button>
@@ -277,7 +278,6 @@ export default function Dashboard() {
 
                                     </div>
 
-                                    {/* Tooltip with arrow on the LEFT */}
                                     <div className="absolute top-[20px] -left-[25px] z-50 flex items-center">
                                         {/* Tooltip box */}
                                         <div className="bg-white shadow-lg rounded-lg p-4 text-sm font-medium text-center w-[210px]">
@@ -312,42 +312,35 @@ export default function Dashboard() {
                             <div className="flex flex-wrap gap-8 justify-center relative left-20">
                                 <div className="w-full max-w-md mx-auto">
                                     <div className="grid grid-cols-2 gap-y-5 gap-x-6">
-                                        {[
-                                            { key: "social", label: "Social" },
-                                            { key: "shopping", label: "Shopping" },
-                                            { key: "textEmail", label: "Text/Email" },
-                                            { key: "sports", label: "Sports" },
-                                            { key: "tvVideo", label: "TV/Video" },
-                                            { key: "news", label: "News" },
-                                        ].map((item) => (
-                                            <div key={item.key} className="flex items-center">
-                                                <div
-                                                    className={`w-5 h-5 flex items-center justify-center mr-2 cursor-pointer ${distractions[item.key as DistractionKey] ? "bg-[#38B6FF]" : "border border-gray-300 rounded"}`}
-                                                    onClick={() => toggleDistraction(item.key as DistractionKey)}
-                                                >
-                                                    {distractions[item.key as DistractionKey] && (
-                                                        <svg
-                                                            width="12"
-                                                            height="9"
-                                                            viewBox="0 0 12 9"
-                                                            fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                        >
-                                                            <path
-                                                                d="M4.00016 6.58597L10.2431 0.342896L11.6573 1.75711L4.00016 9.41426L0.343018 5.75711L1.75723 4.34289L4.00016 6.58597Z"
-                                                                fill="white"
+                                        {["Social", "Shopping", "Text/Email", "Sports", "TV/Video", "News"].map((item) => {
+                                            const key = item.toLowerCase().replace("/", "") as DistractionKey;
+                                            return (
+                                                <div key={item} className="flex items-start">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={distractions[key]}
+                                                        onChange={() => toggleDistraction(key)}
+                                                        className="w-5 h-5 text-[#38B6FF] cursor-pointer"
+                                                    />
+                                                    <span className="ml-2">{item}</span>
+
+                                                    <div className="ml-2 relative">
+                                                        <button onClick={() => setIsSocialDropdownOpen((prev) => !prev)}>
+                                                            <Image src="/1.svg" alt="" width="13" height="15" />
+                                                        </button>
+                                                        {item === "Social" && isSocialDropdownOpen && (
+                                                            <SocialDropdown
+                                                                isOpen={isSocialDropdownOpen}
+                                                                onClose={() => setIsSocialDropdownOpen(false)}
                                                             />
-                                                        </svg>
-                                                    )}
+                                                        )}
+                                                    </div>
                                                 </div>
-                                                <span className="text-sm font-medium">{item.label}</span>
-                                                <button className="ml-1 text-gray-400 hover:text-gray-600">
-                                                    <Image src="/1.svg" alt="" width="13" height="15" />
-                                                </button>
-                                            </div>
-                                        ))}
+                                            );
+                                        })}
                                     </div>
                                 </div>
+
 
                                 {/* Custom Categories Section */}
                                 <div className="w-full max-w-md mx-auto mt-1">
