@@ -7,12 +7,27 @@ export default function Premium() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
-        <div className="flex flex-col md:flex-row min-h-screen bg-white">
+        <div className="flex flex-col md:flex-row min-h-screen bg-white overflow-x-hidden">
 
             <LeftSide />
 
             {/* Content */}
             <div className="flex-1 lg:pt-10 p-6">
+                <div className="flex lg:hidden items-center mb-6 bg-[#F6FCFE] rounded-[16px] w-full h-[73px]">
+                    <div className="flex items-center flex-1 overflow-hidden">
+                        <div className="w-10 h-10 rounded-full bg-gray-300 mr-3 overflow-hidden flex-shrink-0">
+                            <Image src="/da.png" alt="User Avatar" width={40} height={40} className="rounded-full object-cover" />
+                        </div>
+                        <div className="truncate">
+                            <div className="font-medium truncate">Leonardo C</div>
+                            <div className="text-sm text-gray-500 truncate">leonardocc@gmail.com</div>
+                        </div>
+                    </div>
+                    <ChevronDown className="h-5 w-5 text-gray-500 mx-2" />
+                    <div className="flex items-center text-[#38B6FF]">
+                        <Image src="/water.png" alt="Water" width={60} height={40} />
+                    </div>
+                </div>
 
 
                 {/* Header */}
@@ -23,7 +38,7 @@ export default function Premium() {
                 </div>
 
                 {/* Pricing Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-6 max-w-xl sm:max-w-xl md:max-w-xl lg:max-w-4xl mx-auto mb-8">
                     {/* Monthly Plan */}
                     <div
                         className={`border rounded-xl p-6 pt-10 flex flex-col items-center text-center transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer ${selectedPlan === "monthly" ? "border-blue-500 ring-2 ring-blue-500" : ""} mt-20`}
@@ -64,8 +79,6 @@ export default function Premium() {
                         </div>
                     </div>
 
-
-
                     {/* Lifetime Plan */}
                     <div
                         className={`border rounded-xl p-6 flex flex-col items-center text-center transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer ${selectedPlan === "lifetime" ? "border-blue-500 ring-2 ring-blue-500" : ""} mt-20`}
@@ -82,6 +95,7 @@ export default function Premium() {
                         </div>
                     </div>
                 </div>
+
 
 
                 {/* Selected Plan Message */}
@@ -114,23 +128,25 @@ export default function Premium() {
             </div>
 
             {/* Right Panel - User Profile */}
-            <div className="w-[300px] border-l border-gray-200 p-6 transform lg:translate-x-0 -translate-x-3">
-                <div className="flex items-center mb-8 bg-[#F6FCFE] rounded-[16px] w-[280px] h-[73px]">
-                    <div className="flex items-center flex-1">
-                        <div className="w-10 h-10 rounded-full bg-gray-300 mr-3 overflow-hidden">
+            <div className="hidden lg:block w-full sm:w-[250px] border-l border-gray-200 p-3 sm:p-3 transform lg:translate-x-0 -translate-x-3">
+                <div className="flex items-center mb-6 bg-[#F6FCFE] rounded-[16px] w-full h-[73px]">
+                    <div className="flex items-center flex-1 overflow-hidden">
+                        <div className="w-10 h-10 rounded-full bg-gray-300 mr-3 overflow-hidden flex-shrink-0">
                             <Image src="/da.png" alt="User Avatar" width={40} height={40} className="rounded-full object-cover" />
                         </div>
-                        <div>
-                            <div className="font-medium">Leonardo C</div>
-                            <div className="text-sm text-gray-500">leonardocc@gmail.com</div>
+                        <div className="truncate">
+                            <div className="font-medium truncate">Leonardo C</div>
+                            <div className="text-sm text-gray-500 truncate">leonardocc@gmail.com</div>
                         </div>
                     </div>
-                    <ChevronDown className="h-5 w-5 text-gray-500" />
+                    <ChevronDown className="h-5 w-5 text-gray-500 mx-2" />
                     <div className="flex items-center text-[#38B6FF]">
                         <Image src="/water.png" alt="Water" width={60} height={40} />
                     </div>
                 </div>
             </div>
+
+
 
         </div>
     );
