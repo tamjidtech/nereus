@@ -1,11 +1,9 @@
-"use client"
 
 import { ChevronDown, Play, Plus } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import LeftSide from "../components/leftsidebar"
-import { SocialDropdown } from "../components/social-dropdown"
 
 type DistractionKey = "social" | "textEmail" | "tvVideo" | "shopping" | "sports" | "news"
 
@@ -114,7 +112,7 @@ export default function Dashboard() {
             {/* Main + Right Content */}
             <div className="flex flex-col-reverse lg:flex-row flex-1">
                 {/* Main Content */}
-                <main className="flex-1 p-4 md:p-8 overflow-y-auto flex justify-center">
+                <main className="flex-1 p-4 md:p-8  flex justify-center">
                     <div className="max-w-3xl w-full">
                         <h1 className="text-2xl md:text-3xl font-medium text-blue-900 mb-8 text-center">
                             What&apos;s Your Session Goal?
@@ -122,46 +120,102 @@ export default function Dashboard() {
 
                         <div className="flex flex-col sm:flex-row items-center justify-center mb-12 gap-4 relative">
                             {showTutorial && tutorialStep === 1 && (
-                                <div className="absolute left-2 md:-left-6 max-w-xs ">
-                                    <div className="relative flex items-center">
-                                        <div className="bg-white shadow-lg rounded-lg p-4 text-sm font-medium text-center break-words w-full">
-                                            Enter your Deep Work<br />session goal here
+                                <div className="fixed inset-0 z-40">
+
+                                    <div className="absolute inset-0 bg-black opacity-70 pointer-events-none z-40" />
+
+                                    {/* Tooltip section */}
+                                    <div className="absolute top-20 left-20 z-50 flex items-center gap-4 pointer-events-auto">
+                                        {/* Text Box */}
+                                        <div className="bg-white ml-8 shadow-lg rounded-lg p-4 text-sm font-medium text-center break-words w-[250px]">
+                                            Enter your Deep Work
+                                            <br />
+                                            session goal here
+                                            <div className="flex justify-between mt-3">
+                                                <button
+                                                    onClick={skipTutorial}
+                                                    className="text-xs text-gray-500 hover:text-gray-700"
+                                                >
+                                                    Skip
+                                                </button>
+                                                <button
+                                                    onClick={nextTutorialStep}
+                                                    className="text-xs text-blue-500 hover:text-blue-700"
+                                                >
+                                                    Next
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div className="absolute -right-6 top-1/2 -translate-y-1/2 text-[24px]">→</div>
+
+                                        <div className="text-[32px] font-bold text-white drop-shadow-md z-50">
+                                            →
+                                        </div>
+
+
+                                        {/* White Box */}
+                                        <div className="w-[300px] h-[57px] rounded-md bg-transparent border-2 border-blue-500 shadow-md z-50" >
+                                            <input
+                                                type="text"
+                                                value={sessionGoal}
+                                                onChange={(e) => setSessionGoal(e.target.value)}
+                                                placeholder="Session Goal..."
+                                                className="w-full sm:w-[300px] h-[57px] p-4 border border-gray-300 rounded-md"
+                                            />
+
+                                        </div>
+
                                     </div>
                                 </div>
                             )}
+
 
                             <input
                                 type="text"
                                 value={sessionGoal}
                                 onChange={(e) => setSessionGoal(e.target.value)}
                                 placeholder="Session Goal..."
-                                className="w-full sm:w-[300px] h-[57px] p-4 border border-gray-300 rounded-md"
+                                className="w-full sm:w-[300px] h-[57px] p-4 ml-10 border border-gray-300 rounded-md"
                             />
 
-                            <div className="relative">
-                                {showTutorial && tutorialStep === 2 && (
-                                    <div className="absolute -top-6 left-[130px] whitespace-nowrap">
-                                        <div className="relative flex items-center">
-                                            <div className="absolute -left-7 top-1/2 -translate-y-1/2 text-black text-[24px]">
-                                                ←
-                                            </div>
+                            <div className="relative z-50">
+                                <div className="flex items-center gap-2">
+                                    <button className="w-full sm:w-auto bg-[#38B6FF] text-white px-6 py-3 rounded-lg font-medium text-lg">
+                                        Enter
+                                    </button>
+                                </div>
+                            </div>
 
-                                            <div className="bg-white shadow-lg rounded-lg p-4 text-sm font-medium text-center">
-                                                Press enter for AI to <br />
-                                                block distraction <br />
-                                                categories based on <br />
-                                                your task
+                            {showTutorial && tutorialStep === 2 && (
+                                <>
+                                    {/* Dark overlay */}
+                                    <div className="fixed inset-0 bg-black opacity-70 pointer-events-none z-40" />
+
+
+
+                                    {/* Tooltip and arrow */}
+                                    <div className="flex items-center gap-2 -mr-12 mt-2 z-50">
+                                        <div className="text-white text-[24px] drop-shadow-md">←</div>
+                                        <div className="bg-white shadow-lg rounded-lg p-4 text-sm font-medium text-center w-[250px]">
+                                            Press enter for AI to <br />
+                                            block distraction <br />
+                                            categories based on <br />
+                                            your task
+                                            <div className="flex justify-between mt-3">
+                                                <button onClick={skipTutorial} className="text-xs text-gray-500 hover:text-gray-700">
+                                                    Skip
+                                                </button>
+                                                <button onClick={nextTutorialStep} className="text-xs text-blue-500 hover:text-blue-700">
+                                                    Next
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
+                                </>
+                            )}
 
-                                )}
-                                <button className="w-full sm:w-auto bg-[#38B6FF] text-white px-6 py-4 rounded-lg font-medium text-lg">
-                                    Enter
-                                </button>
-                            </div>
+
+
+
                         </div>
 
                         <section className="mb-10 relative">
@@ -170,65 +224,111 @@ export default function Dashboard() {
                                 <ChevronDown className="ml-2 h-5 w-5 text-blue-900" />
                             </div>
                             {showTutorial && tutorialStep === 3 && (
-                                <div className="absolute -left-10 whitespace-nowrap">
-                                    <div className="relative flex items-center">
-                                        <div className="bg-white shadow-lg rounded-lg p-4">
-                                            <div className="text-[14px] leading-[15px] font-medium text-center">
-                                                A check means a <br />distraction category is <br />blocked
+                                <>
+                                    <div className="fixed inset-0 bg-black bg-opacity-60 z-40 pointer-events-none" />
+
+                                    <div className="fixed top-[35%] left-[15%] z-50 pointer-events-auto">
+                                        <div className="relative flex items-center">
+                                            {/* Tooltip Box */}
+                                            <div className="bg-white shadow-lg rounded-lg p-4 w-[230px] z-50">
+                                                <div className="text-sm leading-[15px] font-medium text-center">
+                                                    A check means a <br />
+                                                    distraction category is <br />
+                                                    blocked
+                                                </div>
+                                                <div className="flex justify-between mt-3">
+                                                    <button onClick={skipTutorial} className="text-xs text-gray-500 hover:text-gray-700">
+                                                        Skip
+                                                    </button>
+                                                    <button onClick={nextTutorialStep} className="text-xs text-blue-500 hover:text-blue-700">
+                                                        Next
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div className="absolute right-[-30px] top-1/2 -translate-y-1/2 text-white text-2xl z-50">
+                                                →
                                             </div>
                                         </div>
-                                        <div className="absolute -right-5 top-8 -translate-y-1/2 text-[24px]">
-                                            →
-                                        </div>
+
+                                    </div>
+                                </>
+                            )}
+
+
+                            <div className="flex flex-wrap gap-8 justify-center relative left-20">
+                                <div className="w-full max-w-md mx-auto">
+                                    <div className="grid grid-cols-2 gap-y-5 gap-x-6">
+                                        {[
+                                            { key: "social", label: "Social" },
+                                            { key: "shopping", label: "Shopping" },
+                                            { key: "textemail", label: "Text/Email" },
+                                            { key: "sports", label: "Sports" },
+                                            { key: "tvvideo", label: "TV/Video" },
+                                            { key: "news", label: "News" },
+                                        ].map((item) => (
+                                            <div key={item.key} className="flex items-center">
+                                                <div
+                                                    className={`w-5 h-5 flex items-center justify-center mr-2 cursor-pointer ${distractions[item.key as DistractionKey] ? "bg-[#38B6FF]" : "border border-gray-300 rounded"}`}
+                                                    onClick={() => toggleDistraction(item.key as DistractionKey)}
+                                                >
+                                                    {distractions[item.key as DistractionKey] && (
+                                                        <svg
+                                                            width="12"
+                                                            height="9"
+                                                            viewBox="0 0 12 9"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <path
+                                                                d="M4.00016 6.58597L10.2431 0.342896L11.6573 1.75711L4.00016 9.41426L0.343018 5.75711L1.75723 4.34289L4.00016 6.58597Z"
+                                                                fill="white"
+                                                            />
+                                                        </svg>
+                                                    )}
+                                                </div>
+                                                <span className="text-sm font-medium">{item.label}</span>
+                                                <button className="ml-1 text-gray-400 hover:text-gray-600">
+                                                    <Image src="/1.svg" alt="" width="13" height="15" />
+                                                </button>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
 
-                            )}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 left-8 relative">
-
-
-                                {["Social", "Shopping", "Text/Email", "Sports", "TV/Video", "News"].map((item) => {
-                                    const key = item.toLowerCase().replace("/", "") as DistractionKey
-                                    return (
-                                        <div key={item} className="flex items-center justify-center">
-                                            <input
-                                                type="checkbox"
-                                                checked={distractions[key]}
-                                                onChange={() => toggleDistraction(key)}
-                                                className="w-5 h-5 text-[#38B6FF] cursor-pointer"
-                                            />
-                                            <span className="ml-2">{item}</span>
-
-                                            <div className="ml-2 relative">
-                                                <button onClick={() => setIsSocialDropdownOpen((prev) => !prev)}>
-                                                    <Image src="/1.svg" alt="" width="13" height="15" />
+                                {/* Custom Categories Section */}
+                                <div className="w-full max-w-md mx-auto mt-1">
+                                    <div className="grid grid-cols-2 gap-y-5 gap-x-6">
+                                        {customCategories.map((category) => (
+                                            <div key={category} className="flex items-center">
+                                                <div
+                                                    className={`w-5 h-5 flex items-center justify-center mr-2 cursor-pointer ${selectedCategories.includes(category) ? "bg-[#38B6FF]" : "border border-gray-300 rounded"}`}
+                                                    onClick={() => toggleCategory(category)}
+                                                >
+                                                    {selectedCategories.includes(category) && (
+                                                        <svg
+                                                            width="12"
+                                                            height="9"
+                                                            viewBox="0 0 12 9"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <path
+                                                                d="M4.00016 6.58597L10.2431 0.342896L11.6573 1.75711L4.00016 9.41426L0.343018 5.75711L1.75723 4.34289L4.00016 6.58597Z"
+                                                                fill="white"
+                                                            />
+                                                        </svg>
+                                                    )}
+                                                </div>
+                                                <span className="text-sm font-medium">{category}</span>
+                                                <button onClick={() => removeCategory(category)} className="ml-2 text-red-500">
+                                                    <Image src="/delet.svg" alt="" width="13" height="15" />
                                                 </button>
-                                                {item === "Social" && isSocialDropdownOpen && (
-                                                    <SocialDropdown
-                                                        isOpen={isSocialDropdownOpen}
-                                                        onClose={() => setIsSocialDropdownOpen(false)}
-                                                    />
-                                                )}
+                                                <Image src="/1.svg" alt="" width="13" height="15" className="ml-2" />
                                             </div>
-                                        </div>
-                                    )
-                                })}
-
-                                {customCategories.map((category) => (
-                                    <div key={category} className="flex items-center justify-center">
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedCategories.includes(category)}
-                                            onChange={() => toggleCategory(category)}
-                                            className="w-5 h-5 text-[#38B6FF] cursor-pointer"
-                                        />
-                                        <span className="ml-2">{category}</span>
-                                        <button onClick={() => removeCategory(category)} className="ml-2 text-red-500">
-                                            <Image src="/delet.svg" alt="" width="13" height="15" />
-                                        </button>
-                                        <Image src="/1.svg" alt="" width="13" height="15" className="ml-2" />
+                                        ))}
                                     </div>
-                                ))}
+                                </div>
                             </div>
 
                             <div className="mt-6 flex justify-center relative">
@@ -260,22 +360,40 @@ export default function Dashboard() {
 
                         <div className="flex justify-center items-center mb-8 relative">
                             {showTutorial && tutorialStep === 4 && (
-                                <div className="absolute -mt-10 right-[130px] whitespace-nowrap">
-                                    <div className="relative">
-                                        <div className="absolute -left-6 top-16 -translate-y-1/2 text-black text-[26px]">
-                                            ←
-                                        </div>
+                                <>
+                                    {/* Darkened Background */}
+                                    <div className="fixed inset-0 bg-black bg-opacity-60 z-40 pointer-events-none" />
 
-                                        <div className="bg-white shadow-lg rounded-lg p-4">
-                                            <div className="text-[14px] leading-[18px] font-medium text-center">
-                                                Tab lock prevents you <br />from opening<br />additional <br />applications/tabs
+                                    {/* Tooltip and Arrow */}
+                                    <div className="absolute -mt-10 right-[130px] whitespace-nowrap z-50 pointer-events-auto">
+                                        <div className="relative">
+                                            {/* Arrow */}
+                                            <div className="absolute -left-6 top-16 -translate-y-1/2 text-white text-[26px] z-50">
+                                                ←
+                                            </div>
+
+                                            {/* Tooltip Box */}
+                                            <div className="bg-white shadow-lg rounded-lg p-4 z-50">
+                                                <div className="text-[14px] leading-[18px] font-medium text-center">
+                                                    Tab lock prevents you <br />
+                                                    from opening <br />
+                                                    additional <br />
+                                                    applications/tabs
+                                                </div>
+                                                <div className="flex justify-between mt-3">
+                                                    <button onClick={skipTutorial} className="text-xs text-gray-500 hover:text-gray-700">
+                                                        Skip
+                                                    </button>
+                                                    <button onClick={nextTutorialStep} className="text-xs text-blue-500 hover:text-blue-700">
+                                                        Next
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-
+                                </>
                             )}
+
 
                             <span className="text-sm mr-2">Tab Lock</span>
                             <div
@@ -292,20 +410,34 @@ export default function Dashboard() {
 
                         <div className="flex flex-col items-center mb-12 relative">
                             {showTutorial && tutorialStep === 5 && (
-                                <div className="absolute top-12  -right-[35px] whitespace-nowrap">
-                                    <div className="absolute -left-6 top-10 -translate-y-1/2 text-black text-[26px]">
-                                        ←
+                                <>
+                                    <div className="fixed inset-0 bg-black bg-opacity-60 z-40 pointer-events-none" />
+
+                                    <div className="absolute top-12 -right-[35px] whitespace-nowrap z-50 pointer-events-auto">
+                                        <div className="relative">
+                                            {/* Arrow */}
+                                            <div className="absolute -left-6 top-10 -translate-y-1/2 text-white text-[26px] z-50">
+                                                ←
+                                            </div>
+
+                                            {/* Tooltip Box */}
+                                            <div className="bg-white shadow-lg rounded-lg p-4 text-sm font-medium text-center z-50">
+                                                Set work/rest time and <br />
+                                                start your session!
+                                                <div className="flex justify-between mt-3">
+                                                    <button onClick={skipTutorial} className="text-xs text-gray-500 hover:text-gray-700">
+                                                        Skip
+                                                    </button>
+                                                    <button onClick={nextTutorialStep} className="text-xs text-blue-500 hover:text-blue-700">
+                                                        Next
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-
-
-
-                                    <div className="bg-white shadow-lg rounded-lg p-4 text-sm font-medium text-center">
-                                        Set work/rest time and<br />start your session!
-                                    </div>
-
-                                </div>
-
+                                </>
                             )}
+
 
                             <div className="flex flex-col sm:flex-row items-center gap-6 mb-6">
                                 <div className="flex flex-col items-center">
@@ -429,48 +561,6 @@ export default function Dashboard() {
                 </aside>
             </div>
 
-
-
-            {/* Bottom tutorial navigation box */}
-            {showTutorial && (
-                <div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-white rounded-lg shadow-lg p-4 flex items-center gap-4 z-50">
-                    {/* Skip button */}
-                    <button
-                        onClick={skipTutorial}
-                        className="bg-gray-100 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200"
-                    >
-                        Skip
-                    </button>
-
-                    {/* Step indicators */}
-                    <div className="flex gap-1">
-                        {Array.from({ length: totalTutorialSteps }).map((_, i) => (
-                            <div
-                                key={i}
-                                className={`h-2 w-8 rounded-full ${i === tutorialStep - 1 ? "bg-[#38B6FF]" : "bg-gray-200"}`}
-                            />
-                        ))}
-                    </div>
-
-                    {/* Navigation buttons */}
-                    <div className="flex gap-2">
-                        {tutorialStep > 1 && (
-                            <button
-                                onClick={prevTutorialStep}
-                                className="bg-gray-100 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200"
-                            >
-                                Previous
-                            </button>
-                        )}
-                        <button
-                            onClick={nextTutorialStep}
-                            className="bg-[#38B6FF] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-[#2AA3F3]"
-                        >
-                            {tutorialStep < totalTutorialSteps ? "Next" : "Finish"}
-                        </button>
-                    </div>
-                </div>
-            )}
         </div>
     )
 }

@@ -1,4 +1,3 @@
-"use client"
 
 import { CreditCard, LayoutGrid, LineChart, Menu, Settings, X } from "lucide-react"
 import Image from "next/image"

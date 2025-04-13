@@ -37,7 +37,7 @@ export default function OnboardingPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full px-4">
-      <div className="w-full max-w-md lg:max-w-lg bg-white shadow-lg rounded-lg p-6 relative">
+      <div className="w-full max-w-md lg:max-w-lg bg-white  p-6 relative">
 
         {/* Back Button */}
         {step > 1 && (

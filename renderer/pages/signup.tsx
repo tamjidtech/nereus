@@ -45,8 +45,9 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
-      <div className="w-full max-w-md p-6 bg-white rounded-xl shadow-sm">
+    <div className="flex items-center justify-center min-h-screen bg-white px-4">
+      <div className="w-full max-w-md p-6 pb-2 pt-5 bg-white rounded-xl border border-[#D2D2D2] mb-10">
+
         <div className="flex justify-center mb-8">
           <Link href="../home">
             <Image src="/logo.png" alt="Nereus Deep Work" width={250} height={80} />
